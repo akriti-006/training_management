@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <style>
+        h1{
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        .box{
+            text-align: center;
+            display: flex;
+            align-content: center;
+            table-layout: auto;
+
+        }
+
+        tr:nth-child(even) {
+            background-color: #D6EEEE;
+            border-bottom: 1px solid #ddd;
+
+        }
+
+        table{
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: auto;
+        }
+        
+        thead th{
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+
+        }
+
+        #add{
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #back{
+            text-align: center;
+            margin-top: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>List of Students</h1>
+
+    <div class="box">
+    <table border="1">
+        <thead>
+            <th>S no.</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>D.O.B</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Action</th>
+        </thead>
+
+        <tbody>
+            {% for obj in data %}
+            <br>
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{obj.first_name}}</td>
+                <td>{{obj.last_name}}</td>
+                <td>{{obj.gender}}</td>
+                <td>{{obj.dob}}</td>
+                <td>{{obj.address}}</td>
+                <td>{{obj.phone}}</td>
+                <td>{{obj.email}}</td>
+                <td>
+                    <a href="{% url 'stu-detail' obj.id %}">Detail</a> || 
+                    <a href="{% url 'stu-update' obj.id %}">Update</a> ||
+                    <a href="{% url 'stu-delete' obj.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    </div>
+
+    <div id="add">
+    <a href="{% url 'stu-add' %}">Add new</a>
+    </div>
+
+    <div id="back">
+    <a href="{% url 'stu-home' %}">Back</a>
+    </div>
+
+</body>
+</html>

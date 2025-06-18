@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete page</title>
+
+    <style>
+        h1{
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        button{
+            text-align: center;
+            align-items: center;
+        }
+    </style>
+
+</head>
+<body>
+    <form action="{% url 'stu-delete' obj.pk %}" method="post">
+        {% csrf_token %}
+        <h1>Are you sure to delete this </h1>
+        <button type="submit">Yes</button>
+        <a href="{% url 'stu-list' %}">No</a>
+    </form>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    
+    <style>
+
+        h1 {
+    color: #4CAF50;
+}
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background: white;
+            flex-direction: column;
+            margin: 0;
+    
+        }
+
+        label {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #555;
+    font-weight: bold;
+}
+
+        input {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background-color: #4CAF50;
+    width: 100%;
+    font-size: 16px;
+}
+
+#add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.max{
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    transition: transform 0.2s;
+    width: 500px;
+    text-align: center;
+}
+
+select{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+}
+
+textarea{
+    border-radius: 5px;
+    width: 100%;
+    height: 75px;
+    
+}
+
+    </style>
+</head>
+<body>
+    <h1>Add Student</h1>
+    <div class="max">
+        <form action="{% url 'stu-add' %}" method="POST">
+            {% csrf_token %}
+
+            <label for="first_name">First Name</label><br>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter first name">
+            <br><br>
+
+            <label for="last_name">Last Name</label><br>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter last name">
+            <br><br>
+
+            <label for="gender">Gender</label><br>
+            <select name="gender" id="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select><br><br>
+
+            <label for="dob">DOB:</label><br>
+            <input type="date" id="dob" name="dob" placeholder="Enter D.O.B"><br><br>
+
+            <label for="address">Address:</label><br>
+            <textarea name="address" id="address"  placeholder="Enter address"></textarea>
+            <br><br>
+
+            <label for="phone">Phone No.:</label><br>
+            <input type="number" id="phone" name="phone" placeholder="Enter phone number"><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" placeholder="Enter email"><br><br>
+
+            <div id="add">
+                <button type="submit">Submit</button>
+            </div>
+            <div>
+                <a href="{% url 'stu-list' %}">Back</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
