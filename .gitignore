@@ -1,0 +1,77 @@
+# ================================
+# Python-related ignores
+# ================================
+
+# Ignore Python bytecode files
+*.py[cod]
+*$py.class
+
+# Ignore Python cache directories
+__pycache__/
+
+# ================================
+# Django-specific ignores
+# ================================
+
+# Ignore all migration files except __init__.py
+**/migrations/*
+!**/migrations/__init__.py
+
+# Ignore SQLite database files (used for local development)
+*.sqlite3
+*.db
+db.sqlit  # Custom DB file you mentioned
+
+# ================================
+# Virtual environment folders
+# ================================
+
+# Common virtual environment directories
+venv/
+env/
+ENV/
+.VENV/
+.venv/
+
+# ================================
+# IDE and editor configuration files (optional but recommended)
+# ================================
+
+# VS Code settings folder
+.vscode/
+
+# PyCharm/IntelliJ settings folder
+.idea/
+
+# ================================
+# OS-generated files
+# ================================
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# ================================
+# Log files
+# ================================
+
+*.log
+
+# ================================
+# Optional: Static/media files (if generated during runtime or uploads)
+# ================================
+
+media/
+staticfiles/
+
+# ================================
+# Optional: Environment files
+# ================================
+
+.env
+
+# ================================
+# End of .gitignore
+# ================================
