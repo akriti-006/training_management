@@ -1,0 +1,56 @@
+<div class="sidebar">
+    <ul>
+        <li>
+            <a href="{% url 'accounts:home'%}" class="{% if request.resolver_match.view_name == 'accounts:home' %}active{% endif %}">Home</a>
+        </li>
+        <li>
+            <a href="{% url 'shared-app:programming-language-list' %}" class="
+            {% if request.resolver_match.view_name == 'shared-app:programming-language-list' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:programming-language-add' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:programming-language-detail' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:programming-language-update' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:programming-language-delete' %}active{% endif %}
+            ">Programming Language</a>
+        </li>
+        <li>
+            <a href="{% url 'shared-app:framework-list' %}" class="
+            {% if request.resolver_match.view_name == 'shared-app:framework-list' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:framework-add' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:framework-detail' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:framework-update' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:framework-delete' %}active{% endif %}
+            ">Framework</a>
+        </li>
+        <li>
+            <a href="{% url 'shared-app:course-data-list' %}" class="
+            {% if request.resolver_match.view_name == 'shared-app:course-data-list' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:course-data-add' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:course-data-detail' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:course-data-update' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:course-data-delete' %}active{% endif %}
+            ">Course Data</a>
+        </li>
+        <li>
+            <a href="{% url 'shared-app:training-enquiry-list' %}" class="
+            {% if request.resolver_match.view_name == 'shared-app:training-enquiry-list' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:training-enquiry-add' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:training-enquiry-detail' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:training-enquiry-update' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:training-enquiry-delete' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:training-enquiry-start' %}active{% endif %}
+            ">Training Enquiry</a>
+        </li>
+
+        <li>
+            <a href="{% url 'shared-app:course-enrollment-list' %}" class="
+            {% if request.resolver_match.view_name == 'shared-app:course-enrollment-list' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:course-enrollment-detail' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:course-enrollment-update' %}active{% endif %}
+            ">Student Enrollment</a>
+        </li>
+    </ul>
+    
+    <div class="logout">
+        <a href="{% url 'accounts:logout' %}">Logout</a>
+    </div>
+</div>

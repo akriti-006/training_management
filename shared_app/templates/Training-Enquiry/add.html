@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    TE-Add
+{% endblock %}
+
+{% block content %}
+<style>
+      body {
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 30px;
+        color: #333;
+      }
+
+      .max {
+        max-width: 500px;
+        margin: 40px auto;
+        margin-left: 500px;
+        margin-top: 50px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 90%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        resize: vertical;
+      }
+
+      .btn {
+        text-align: center;
+      }
+
+      button {
+        background-color: #85c5ed;
+        color: white;
+        padding: 10px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #85c5ed;
+      }
+
+      .backBtn {
+  text-align: center;
+  margin-top: 15px;
+}
+
+    </style>
+
+  
+    <div class="max">
+
+      <h2>Add Enquiry</h2>
+
+      <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+      
+      <form action="{% url 'shared-app:training-enquiry-add' %}" method="POST">
+        {% csrf_token %}
+
+        <label for="first_name">First Name:</label><br>
+        <input type="text" id="first_name" name="first_name" /><br><br>
+
+        <label for="last_name">Last Name:</label><br>
+        <input type="text" id="last_name" name="last_name" /><br><br>
+
+        <label for="address">Address:</label><br>
+        <textarea name="address" id="address" rows="4" cols="50"></textarea><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" /><br><br>
+
+        <label for="phone">Phone:</label><br>
+        <input type="number" id="phone" name="phone" /><br><br>
+
+        <label for="gender">Gender:</label><br>
+        <select name="gender" id="gender">
+            <option value="">-----</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+
+        <label for="higher_qualification">Higher Education:</label><br>
+        <input type="text" id="higher_qualification" name="higher_qualification"><br><br>
+
+
+        <label for="course">Course:</label><br>
+        <select name="course" id="course">
+            <option value="">-------</option>
+            {% for obj in cd_obj %}
+            <option value="{{obj.id}}">{{obj.name}}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+          <option value="-----">-----</option>
+          <option value="Enquiry">Enquiry</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Started">Started</option>
+          <option value="Completed">Completed</option>
+          <option value="Dropped">Dropped</option>
+        </select>
+
+        <div class="btn">
+          <button type="submit">Add</button>
+        </div>
+
+        <div class="backBtn">
+          <a href="{% url 'shared-app:training-enquiry-list' %}">⬅ Back</a>
+        </div>
+
+      </form>
+    </div>
+
+{% endblock %}

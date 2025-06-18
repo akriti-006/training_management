@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load custom_tag %}
+
+{% block title %}
+    SE-List
+{% endblock %}
+
+{% block content %}
+
+<style>
+    thead th{
+        height: 40px;
+    }
+
+    thead th{
+    height: 40px;
+}
+    
+.messages{
+    list-style: none;
+    padding: 0;
+}
+.messages li {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.success {
+    color: #155724 !important;
+}
+.error {
+    color: #721c24 !important;
+}
+</style>
+
+        <div class="main">
+           <h4>Welcome, {{ request.user.first_name }} {{ request.user.last_name }}!,  Year is: {{ current_year}}</h4>
+            <h1>List of Student Enrollment</h1>
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            <div class="box">
+               <table border="1">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">S.no.</th>
+                            <th rowspan="2">Name</th>
+                            <th rowspan="2">Email</th>
+                            <th rowspan="2">Course Name</th>
+                            <th colspan="3">Fees</th>
+                            <th rowspan="2">Start Date</th>
+                            <th rowspan="2"> End Date</th>
+                            <th rowspan="2">Action</th>
+                            <!-- <th rowspan="2">Payment</th> -->
+                        </tr>
+                        <tr>
+                            <th>Total Fees</th>
+                            <th>Amount Paid</th>
+                            <th>Pending fee</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for obj in data %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ obj.student.get_full_name }}</td>
+                            <td>{{ obj.student.email }}</td>
+                            <td>{{ obj.course.name }}</td>
+                            <td>{{ obj.course.total_fee }}</td>
+                            <td>{{ obj.feeinformation_set.all|sum_values:"amount_paid"  }}</td>
+                            <td>{{obj.course.total_fee|pending_amount:obj.feeinformation_set.all}}</td>
+                            <td>{{ obj.start_date }}</td>
+                            <td>{{obj.end_date}}</td>
+                    <td>
+                        <a href="{% url 'shared-app:course-enrollment-detail' obj.id %}">Detail</a> || 
+                        <a href="{% url 'shared-app:course-enrollment-update' obj.id %}">Update</a> 
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        </div>
+
+        <div id="back">
+            <a href="{% url 'accounts:home' %}">Back</a>
+        </div>
+
+    </div>
+{% endblock %}
+
+</div>

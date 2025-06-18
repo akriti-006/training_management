@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    FW-Add
+{% endblock %}
+
+{% block css %}
+    
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+      body {
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 30px;
+        color: #333;
+      }
+
+      .max {
+        max-width: 600px;
+        margin: 50px auto;
+        margin-left: 500px;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 90%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        resize: vertical;
+      }
+
+      .btn {
+        text-align: center;
+      }
+
+      button {
+        background-color: #85c5ed;
+        color: white;
+        padding: 10px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #85c5ed;
+      }
+
+      .backBtn {
+  text-align: center;
+  margin-top: 15px;
+}
+
+</style>
+
+
+
+    <div class="max">
+      <h2>Framework</h2>
+      <form action="{% url 'shared-app:framework-add' %}" method="POST">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" />
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea>
+        <label for="language">Language:</label>
+        <select name="language" id="language">
+            <option value="">-------</option>
+            {% for obj in pl_obj %}
+            <option value="{{obj.id}}">{{obj.name}}</option>
+            {% endfor %}
+        </select>
+        <div class="btn">
+          <button type="submit">Add</button>
+        </div>
+        <div class="backBtn">
+          <a href="{% url 'shared-app:framework-list'%}">⬅ Back</a>
+        </div>
+      </form>
+    </div>
+{% endblock %}

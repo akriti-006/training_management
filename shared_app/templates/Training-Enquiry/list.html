@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    TE-List
+{% endblock %}
+
+{% block content %}
+
+<style>
+thead th{
+    height: 40px;
+}
+    
+.messages{
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+.messages li {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.success {
+    color: #155724 !important;
+}
+.error {
+    color: #721c24 !important;
+}
+
+</style>
+
+
+<div class="main">
+    <h4>Welcome, {{ request.user.first_name }} {{ request.user.last_name }}!, Year is: {{ current_year }}</h4>
+
+    <h1>List of Training Enquiries</h1>
+
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="get">
+        <label>Gender:</label>
+        <select name="gender">
+            <option value="">-- Select Gender --</option>
+            <option value="Male" {% if selected_gender|lower == 'male' %}selected{% endif %}>Male</option>
+            <option value="Female" {% if selected_gender|lower == 'female' %}selected{% endif %}>Female</option>
+        </select>
+
+        <label>Status:</label>
+        <select name="status">
+            <option value="">-- Select Status --</option>
+            <option value="Enquiry" {% if selected_status|lower == 'enquiry' %}selected{% endif %}>Enquiry</option>
+            <option value="In Progress" {% if selected_status|lower == 'in progress' %}selected{% endif %}>In Progress</option>
+            <option value="Started" {% if selected_status|lower == 'started' %}selected{% endif %}>Started</option>
+            <option value="Completed" {% if selected_status|lower == 'completed' %}selected{% endif %}>Completed</option>
+            <option value="Dropped" {% if selected_status|lower == 'dropped' %}selected{% endif %}>Dropped</option>
+        </select>
+
+        <button type="submit">Apply</button>
+        <a href="{% url 'shared-app:training-enquiry-list' %}">Clear</a>
+    </form>
+    
+    <div class="box">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th rowspan="2">S no.</th>
+                    <th rowspan="2">Name</th>
+                    <th rowspan="2">Gender</th>
+                    <th rowspan="2">Phone</th>
+                    <th colspan="5">Course</th>
+                    <th rowspan="2">Action</th>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Duration (weeks)</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Start</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for obj in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ obj.get_full_name }}</td>
+                    <td>{{ obj.gender }}</td>
+                    <td>{{ obj.phone }}</td>
+                    <td>{{ obj.course.name }}</td>
+                    <td>{{ obj.course.duration_in_weeks }}</td>
+                    <td>{{ obj.course.total_fee }}</td>
+                    <td>{{ obj.status }}</td>
+                    <td>
+                        {% if obj.status == "Enquiry" %}
+                            <a href="{% url 'shared-app:training-enquiry-start' obj.id %}">Start</a>
+                        {% else %}
+                            ----
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        <a href="{% url 'shared-app:training-enquiry-detail' obj.id %}">Detail</a> || 
+                        <a href="{% url 'shared-app:training-enquiry-update' obj.id %}">Update</a> ||
+                        <a href="{% url 'shared-app:training-enquiry-delete' obj.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        </div>
+
+        <div id="add">
+        <a href="{% url 'shared-app:training-enquiry-add' %}">Add new</a>
+        </div>
+
+        <div id="back">
+            <a href="{% url 'accounts:home' %}">Back</a>
+        </div>
+
+    </div>
+{% endblock %}

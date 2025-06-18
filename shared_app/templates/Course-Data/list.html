@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    CD-List
+{% endblock %}
+
+{% block content %}
+<style>
+    thead th{
+        height: 40px;
+    }
+
+    .messages{
+    list-style: none;
+    padding: 0;
+}
+.messages li {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.success {
+    color: #155724 !important;
+}
+.error {
+    color: #721c24 !important;
+}
+
+</style>
+
+        <div class="main">
+            
+         <h4>Welcome, {{ request.user.first_name }} {{ request.user.last_name }}!, Year is: {{ current_year }}</h4>
+
+            <h1>List of Courses</h1>
+
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+
+            <div class="box">
+                <table border="1">
+                    <thead>
+                        <th>S no.</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                        
+                    </thead>
+
+                    <tbody>
+                        {% for obj in data %}
+                        <br>
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{obj.name}}</td>
+                            <td>{{obj.description}}</td>
+                            
+                            <td>
+                                <a href="{% url 'shared-app:course-data-detail' obj.id %}">Detail</a> || 
+                                <a href="{% url 'shared-app:course-data-update' obj.id %}">Update</a> ||
+                                <a href="{% url 'shared-app:course-data-delete' obj.id %}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                </div>
+
+                <div id="add">
+                <a href="{% url 'shared-app:course-data-add' %}">Add new</a>
+                </div>
+
+                <div id="back">
+                    <a href="{% url 'accounts:home' %}">Back</a>
+                </div>
+
+            </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Pl-details
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/pl.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="max">
+    <form action="{% url 'shared-app:programming-language-detail' obj.id %}" method="POST">
+        {% csrf_token %}
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value="{{obj.name}}"><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea name="description" id="description" rows="4" cols="50">{{obj.description}}</textarea><br><br>
+
+        <div class="backBtn">
+          <a href="{% url 'shared-app:programming-language-list'%}">⬅ Back</a>
+        </div>
+        
+    </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    PL-Delete
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/pl.css' %}">
+{% endblock %}
+
+{% block content %}
+        <div class="main">
+
+            <form action="{% url 'shared-app:programming-language-delete' obj.pk %}" method="post">
+                {% csrf_token %}
+                <h1>Are you sure to delete this ?</h1>
+                <button type="submit">Yes</button>
+                <a href="{% url 'shared-app:programming-language-list' %}">No</a>
+            </form>
+        </div>
+
+{% endblock %}

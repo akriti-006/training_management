@@ -1,0 +1,78 @@
+
+Django
+   
+    - M
+        Models:
+             bulk_create, select_related, prefetch_related
+            - Proxy Model
+    - V
+        Views:
+                - from django.views.generic.edit import CreateView, UpdateView, DeleteView
+                - from django.views.generic.list import ListView
+                - from django.views.generic.detail import DetailView
+
+                - from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
+    - Setting up static field
+        - JavaScript, images
+
+    - cache: why, when, how
+    - django pagination
+    
+    - Middleware
+        - Understanding and creating middleware
+        - Modifying request/response globally
+    - Session
+        - It's need
+        - One cart example
+    
+    - Django Form handling
+        - Need of django form
+        - HTML form vs django form
+        - Define django form
+        - Outputting forms as HTML
+        - API (https://docs.djangoproject.com/en/5.0/ref/forms/api/)
+            - Bound and Unbound form
+            - clean
+            - is_valid
+            - errors
+            - initial
+            - has changed
+            - changed_data
+            - fields
+            - cleaned_data
+            - output style as_div(), as_p(), as_table(), as_ul()
+        - Form fields arguments
+            - required
+            - label
+            - label_suffix
+            - initial
+            - widget
+            - help_text
+            - error_messages
+            - validator
+            - disabled
+    - Signals
+        - Need and usages
+        - pre
+        - post
+    - N+1 problem
+    - Q and F expression
+    - https://medium.com/@abdullah.saalim/mastering-f-and-q-expressions-in-django-the-ultimate-guide-720fa04ea3cb
+    - MySQL DB configure
+    - Env Variable
+        - https://dev.to/defidelity/protect-your-sensitive-data-a-guide-to-env-files-in-django-499e
+
+    - Basic Jquery
+        - Variable
+        - Conditional and looping statement
+        - Function declaration
+    - Jquery events
+        - Click
+        - Submit handler
+        - Window event like reload, path, locate
+        - Document.ready/Click
+    - AJAX
+        - Need
+        - Get
+        - Post
+

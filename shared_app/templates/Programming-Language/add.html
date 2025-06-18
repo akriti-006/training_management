@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    PL-Add
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/pl.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="max">
+      <h2>Programming Language {{current_year}}</h2>
+      <form action="{% url 'shared-app:programming-language-add' %}" method="POST">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" />
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea>
+        <div class="btn">
+          <button type="submit">Add</button>
+        </div>
+        <div class="backBtn">
+          <a href="{% url 'shared-app:programming-language-list'%}">⬅ Back</a>
+        </div>
+      </form>
+    </div>
+{% endblock %}

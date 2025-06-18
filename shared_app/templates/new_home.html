@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+<div class="main">
+
+    <style>
+        .messages {
+         list-style: none;
+         padding: 0;
+         text-align: center;
+     }
+    .messages li {
+         padding: 10px;
+         margin-bottom: 5px;
+    }
+    .success {
+         color: #155724 !important;
+     }
+    .error {
+        color: #721c24 !important;
+     }
+    </style>
+
+    <h4>Welcome, {{ user.username }}!</h4>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+    <h2>This is Home page</h2>
+</div>
+{% endblock %}

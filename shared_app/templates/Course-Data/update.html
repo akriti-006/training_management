@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    CD-update
+{% endblock %}
+
+{% block content %}
+
+<style>
+      body {
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 30px;
+        color: #333;
+      }
+
+      .max {
+        max-width: 600px;
+        margin: 50px auto;
+        margin-left: 370px;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 90%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        resize: vertical;
+      }
+
+      .btn {
+        text-align: center;
+      }
+
+      button {
+        background-color: #85c5ed;
+        color: white;
+        padding: 10px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .backBtn {
+  text-align: center;
+  margin-top: 15px;
+}
+
+    </style>
+
+
+<h2>Course Data</h2>
+
+    <div class="max">
+      <form action="{% url 'shared-app:course-data-update' obj.id %}" method="POST">
+        {% csrf_token %}
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{obj.name}}" />
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50">{{obj.description}}</textarea>
+
+        <label>Language</label><br>
+        {% for pl in pl_obj %}
+        <input type="checkbox" name="language" value="{{ pl.id }}" id="language_{{ pl.id }}" {% if pl in obj.programming_languages.all %} checked {% endif %}>
+        <label for="language_{{ pl.id }}">{{ pl.name }}</label>
+        {% endfor %}
+        <br>
+        <label for="framework">Framework:</label>
+        <select name="framework" id="framework" multiple>
+            <option value="">-------</option>
+            {% for fw in fw_obj %}
+            <option value="{{fw.id}}" {% if fw in obj.frameworks.all %} selected {% endif %}>{{fw.name}}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="duration_in_weeks">Duration (in weeks):</label>
+        <input type="number" id="duration_in_weeks" name="duration_in_weeks" value="{{obj.duration_in_weeks}}" /><br>
+        <br>
+
+        <label for="total_fee">Total Fee:</label>
+        <input type="number" id="total_fee" name="total_fee" value="{{obj.total_fee}}" /><br><br>
+
+        <div class="btn">
+          <button type="submit">Update</button>
+        </div>
+
+        <div class="backBtn">
+          <a href="{% url 'shared-app:course-data-list' %}">⬅ Back</a>
+        </div>
+
+      </form>
+    </div>
+
+{% endblock %}

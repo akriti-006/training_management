@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    TE-start
+{% endblock %}
+
+{% block content %}
+
+
+<style>
+    
+
+    h1 {
+        text-align: center;
+        color: #85c5ed;
+    }
+
+    .button-group {
+        margin-top: 20px;
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin: 20px auto;
+        text-align: center;
+        width: fit-content;
+        color: rgb(255, 0, 0);
+    }
+    
+    .max {
+        max-width: 600px;
+        margin: 50px auto;
+        margin-left: 500px;
+        margin-top: 200px;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+     
+
+    a {
+        background-color: white;
+        color: #000;
+        border-radius: 4px;
+    }
+
+    </style>
+
+    <div class="max">
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+
+        <form action="{% url 'shared-app:training-enquiry-start' obj.pk %}" method="post">
+            {% csrf_token %}
+            <h1>Are you sure to start this course?</h1>
+
+            <div>
+                <label for="course_start_date">Course Start Date</label>
+                <input type="date" name="course_start_date" id="course_start_date">
+            </div>
+
+            <div>
+                <label for="fee_amount">Fee Amount</label>
+                <input type="number" name="fee_amount" id="fee_amount">
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <i class="fas fa-eye" id="password"></i>
+            
+            </div>
+
+            <div class="button-group">
+                <button type="submit">Yes</button>
+                <a href="{% url 'shared-app:training-enquiry-list' %}">No</a>
+            </div>
+        </form>
+</div>
+
+{% endblock %}

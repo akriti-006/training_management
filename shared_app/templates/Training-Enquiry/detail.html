@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    TE-details
+{% endblock %}
+
+{% block content %}
+<style>
+      body {
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 30px;
+        color: #333;
+      }
+
+      .max {
+        max-width: 500px;
+        margin: 40px auto;
+        margin-left: 500px;
+        margin-top: 50px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 90%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        resize: vertical;
+      }
+
+      .btn {
+        text-align: center;
+      }
+
+      button {
+        background-color: #85c5ed;
+        color: white;
+        padding: 10px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #85c5ed;
+      }
+
+      .backBtn {
+  text-align: center;
+  margin-top: 15px;
+}
+
+    </style>
+
+
+  
+<div class="max">
+      <h2>Detail</h2>
+
+      <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+      
+      <form action="{% url 'shared-app:training-enquiry-detail' obj.id %}" method="POST">
+        {% csrf_token %}
+
+        <label for="first_name">First Name:</label><br>
+        <input type="text" id="first_name" name="first_name" value="{{obj.first_name}}" /><br><br>
+
+        <label for="last_name">Last Name:</label><br>
+        <input type="text" id="last_name" name="last_name" value="{{obj.last_name}}" /><br><br>
+
+        <label for="address">Address:</label><br>
+        <textarea name="address" id="address" rows="4" cols="50">{{obj.address}}</textarea><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="{{obj.email}}" /><br><br>
+
+        <label for="phone">Phone:</label><br>
+        <input type="number" id="phone" name="phone" value="{{obj.phone}}"/><br><br>
+
+        <label for="gender">Gender:</label><br>
+        <input type="text" id="gender" name="gender" value="{{obj.gender}}"> <br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50">{{obj.description}}</textarea><br><br>
+
+
+        <label for="higher_qualification">Higher Education:</label><br>
+        <input type="text" id="higher_qualification" name="higher_qualification" value="{{obj.higher_qualification}}"><br><br>
+
+
+        <label for="course">Course:</label><br>
+        <input type="text" id="course" name="course" value="{{obj.course}}"><br><br>
+
+
+        <label for="status">Status:</label><br>
+        <input type="text" id="status" name="status" value="{{obj.status}}"> <br><br>
+
+
+        <div class="backBtn">
+          <a href="{% url 'shared-app:training-enquiry-list' %}">⬅ Back</a>
+        </div>
+
+      </form>
+    </div>
+
+{% endblock %}
