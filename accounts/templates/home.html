@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        /* Background gradient with overlay */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+
+        /* Card-style container */
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px 60px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        /* Link button style */
+        a {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #ffffff22;
+            color: #fff;
+            padding: 14px 28px;
+            margin: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        a:hover {
+            background-color: #ffffff44;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+     {% for message in messages %}
+        <p style="color: black;">{{message}}</p>
+    {% endfor %}
+
+    <h2>Welcome, {{request.user.username}}</h2>
+    
+    <div class="container">
+        <h1>Welcome to the Home Page</h1>
+        <a href="{% url 'shared-app:programming-language-list' %}">Programming Language</a>
+        <a href="{% url 'shared-app:framework-list' %}">Framework</a>
+        <a href="{% url 'shared-app:course-data-list' %}">Course Data</a>
+        <a href="{% url 'shared-app:training-enquiry-list' %}">Training Enquiry</a>
+   
+    </div>
+    <a href="{% url 'accounts:logout' %}">Logout</a>
+</body>
+</html>
