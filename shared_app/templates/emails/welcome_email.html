@@ -68,13 +68,16 @@
         <p>Hi <strong>{{first_name}} {{last_name}}</strong>,</p>
         <p>Thanks for choosing {{course_name}} course. We’re excited to have you!</p>
 
+        
+        {% if is_new_user %}
         <p><strong>Here’s your login information:</strong></p>
-        <p><b>Username:</b> {{to_email}} </p>
-        <p><b>Password:</b> {{password}} </p>
+            <p><b>Username:</b> {{to_email}} </p>
+            <p><b>Password:</b> {{password}} </p>
+        {% endif %}
+    
+        <p>Your course will run from <b> {{start_date}} </b> to <b> {{end_date}} </b>.</p>
 
         <a href="{{login_link}}" class="button">Login Now</a>
-
-        <p>Your course will run from <b> {{start_date}} </b> to <b> {{end_date}} </b>.</p>
 
         <p>We hope you have a wonderful experience and gain valuable skills throughout your learning journey.</p>
 

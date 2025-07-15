@@ -1,147 +1,234 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     TE-Add
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/te.css' %}">
+{% endblock %}
+
 {% block content %}
-<style>
-      body {
-        background-color: #f0f2f5;
-        margin: 0;
-        padding: 0;
-      }
-
-      h2 {
-        text-align: center;
-        margin-top: 30px;
-        color: #333;
-      }
-
-      .max {
-        max-width: 500px;
-        margin: 40px auto;
-        margin-left: 500px;
-        margin-top: 50px;
-        padding: 20px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-      }
-
-      input[type="text"],
-      textarea {
-        width: 90%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 14px;
-        resize: vertical;
-      }
-
-      .btn {
-        text-align: center;
-      }
-
-      button {
-        background-color: #85c5ed;
-        color: white;
-        padding: 10px 25px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      button:hover {
-        background-color: #85c5ed;
-      }
-
-      .backBtn {
-  text-align: center;
-  margin-top: 15px;
-}
-
-    </style>
-
   
     <div class="max">
 
-      <h2>Add Enquiry</h2>
+      <h2>Add Enquiry</h2><br>
 
-      <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
+      <span id="enquiry_info" style="color: cadetblue; display: none;">Data is already exist, You can only edit description.</span>
       
-      <form action="{% url 'shared-app:training-enquiry-add' %}" method="POST">
+      <form id="add_form" action="{% url 'shared-app:training-enquiry-add' %}" method="POST">
         {% csrf_token %}
 
-        <label for="first_name">First Name:</label><br>
-        <input type="text" id="first_name" name="first_name" /><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
 
-        <label for="last_name">Last Name:</label><br>
-        <input type="text" id="last_name" name="last_name" /><br><br>
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" />
 
-        <label for="address">Address:</label><br>
-        <textarea name="address" id="address" rows="4" cols="50"></textarea><br><br>
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" />
 
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" /><br><br>
+        <label for="address">Address:</label>
+        <textarea name="address" id="address" rows="4" cols="50"></textarea>
 
-        <label for="phone">Phone:</label><br>
-        <input type="number" id="phone" name="phone" /><br><br>
+        <label for="phone">Phone:</label>
+        <input type="number" id="phone" name="phone" />
 
-        <label for="gender">Gender:</label><br>
+        <label for="gender">Gender:</label>
         <select name="gender" id="gender">
             <option value="">-----</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-        </select><br><br>
+        </select>
 
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea>
 
-        <label for="higher_qualification">Higher Education:</label><br>
-        <input type="text" id="higher_qualification" name="higher_qualification"><br><br>
+        <label for="higher_qualification">Higher Education:</label>
+        <input type="text" id="higher_qualification" name="higher_qualification">
 
 
-        <label for="course">Course:</label><br>
-        <select name="course" id="course">
+        <label for="course">Course:</label>
+        <select name="course" id="course" >
             <option value="">-------</option>
             {% for obj in cd_obj %}
             <option value="{{obj.id}}">{{obj.name}}</option>
             {% endfor %}
-        </select><br><br>
-
-        <label for="status">Status:</label>
-        <select name="status" id="status">
-          <option value="-----">-----</option>
-          <option value="Enquiry">Enquiry</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Started">Started</option>
-          <option value="Completed">Completed</option>
-          <option value="Dropped">Dropped</option>
-        </select>
+        </select><br>
 
         <div class="btn">
           <button type="submit">Add</button>
         </div>
 
         <div class="backBtn">
-          <a href="{% url 'shared-app:training-enquiry-list' %}">⬅ Back</a>
+          <a href="{% url 'shared-app:training-enquiry-list' %}">Back</a>
         </div>
 
       </form>
     </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+   $(document).ready(function () {
+
+    $('#enquiry_info').hide();
+
+    $('#email').on('blur', function () {
+      console.log("this is a blur event.")
+      let email = $(this).val().trim();
+      console.log('email : ', email)
+
+      if (email) {
+        $.ajax({
+            url: `http://127.0.0.1:2222/training-enquiry/${encodeURIComponent(email)}/check/`,
+            type: 'GET',
+            success: function (response) {
+                // handle response
+                console.log("response : ", response)
+                
+                if (response.status=='exist')
+                {
+                  data = response.data
+                  $('#enquiry_info').show();
+                  $('#first_name').val(data.first_name).prop('readonly', true);
+                  $('#last_name').val(data.last_name).prop('readonly', true);
+                  $('#address').val(data.address).prop('readonly', true);
+                  $('#phone').val(data.phone).prop('readonly', true);
+                  $('#gender').val(data.gender);
+                  $('#description').val(data.description)
+                  $('#higher_qualification').val(data.higher_qualification).prop('readonly', true);
+                }
+                else{
+                  $('#enquiry_info').hide();
+                }
+
+            },
+            error: function (xhr) {
+                // handle error
+                console.log("Ajax get error.")
+            }
+        });
+      }
+
+
+
+    });
+
+
+    $('#add_form').on('submit', function (e) {
+      e.preventDefault(); // Prevent form submission
+
+      // Get the form values
+      const first_name = $('#first_name').val().trim();
+      const last_name = $('#last_name').val().trim();
+      const address = $('#address').val().trim();
+      const email = $('#email').val().trim();
+      const phone = $('#phone').val();
+      const description = $('#description').val().trim();
+      const higher_qualification = $('#higher_qualification').val().trim();
+      const course = $('#course').val();
+
+      flag = 0
+
+      if(first_name==0){
+        console.log('first_name is invalid')
+        $('#first_name').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#first_name').removeClass( "error_class" );
+      }
+        if(last_name==0){
+        console.log('last_name is invalid')
+        $('#last_name').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#last_name').removeClass( "error_class" );
+      }
+
+        if(address==0){
+        console.log('address is invalid')
+        $('#address').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#address').removeClass( "error_class" );
+      }
+
+       if(email==0){
+        console.log('email is invalid')
+        $('#email').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#email').removeClass( "error_class" );
+      }
+      
+      if(description==0){
+        console.log('description is invalid')
+        $('#description').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#description').removeClass( "error_class" );
+      }
+
+      if(higher_qualification==0){
+        console.log('higher_qualification is invalid')
+        $('#higher_qualification').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#higher_qualification').removeClass( "error_class" );
+      }
+      
+
+      if (phone === "" || isNaN(phone)) {
+          console.log('phone is invalid');
+          $('#phone').addClass("error_class");
+          flag = 1;
+      } else {
+          $('#phone').removeClass("error_class");
+      }
+
+    if (course === "") {
+      console.log('course is not selected');
+      $('#course').addClass("error_class");
+      flag = 1;
+    } 
+    else {
+    $('#course').removeClass("error_class");
+    }
+
+      if(flag==1)
+      {
+        return;
+      }
+
+      // Log to console
+      console.log("Form Data:");
+      console.log("Name:", name);
+      console.log("Description:", description);
+
+      // Optionally submit the form after logging:
+
+      out = confirm('are you sure you want to submit the data?')
+
+      if(out==true){
+        console.log('we will submit the form')
+        this.submit();
+      }
+      else{
+        console.log('we will not submit the form')
+      }
+      
+    });
+  });
+
+</script>
 
 {% endblock %}

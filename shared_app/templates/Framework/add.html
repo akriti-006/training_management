@@ -1,90 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     FW-Add
 {% endblock %}
 
 {% block css %}
-    
+    <link rel="stylesheet" href="{% static 'shared-app/css/fw.css' %}">
 {% endblock %}
-
 
 {% block content %}
 
-<style>
-      body {
-        background-color: #f0f2f5;
-        margin: 0;
-        padding: 0;
-      }
-
-      h2 {
-        text-align: center;
-        margin-top: 30px;
-        color: #333;
-      }
-
-      .max {
-        max-width: 600px;
-        margin: 50px auto;
-        margin-left: 500px;
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-      }
-
-      input[type="text"],
-      textarea {
-        width: 90%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 14px;
-        resize: vertical;
-      }
-
-      .btn {
-        text-align: center;
-      }
-
-      button {
-        background-color: #85c5ed;
-        color: white;
-        padding: 10px 25px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      button:hover {
-        background-color: #85c5ed;
-      }
-
-      .backBtn {
-  text-align: center;
-  margin-top: 15px;
-}
-
-</style>
-
-
-
     <div class="max">
       <h2>Framework</h2>
-      <form action="{% url 'shared-app:framework-add' %}" method="POST">
+      <form id="add_form" action="{% url 'shared-app:framework-add' %}" method="POST">
         {% csrf_token %}
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" />
+        <input type="text" id="name" name="name"  />
         <label for="description">Description:</label>
         <textarea id="description" name="description" rows="4" cols="50"></textarea>
         <label for="language">Language:</label>
@@ -98,8 +30,78 @@
           <button type="submit">Add</button>
         </div>
         <div class="backBtn">
-          <a href="{% url 'shared-app:framework-list'%}">⬅ Back</a>
+          <a href="{% url 'shared-app:framework-list'%}">Back</a>
         </div>
       </form>
     </div>
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+  $(document).ready(function () {
+    $('#add_form').on('submit', function (e) {
+      e.preventDefault(); // Prevent form submission
+
+      // Get the form values
+      const name = $('#name').val().trim();
+      const description = $('#description').val().trim();
+      const language = $('#language').val().trim();
+
+      flag = 0
+
+      if(name==0){
+        console.log('name is invalid')
+        $('#name').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#name').removeClass( "error_class" );
+      }
+      
+      if(description==0){
+        console.log('description is invalid')
+        $('#description').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#description').removeClass( "error_class" );
+      }
+      
+      if(language.length==0){
+        console.log('language is invalid')
+        $('#language').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#language').removeClass( "error_class" );
+      }
+
+      if(flag==1)
+      {
+        return;
+      }
+
+      // Log to console
+      console.log("Form Data:");
+      console.log("Name:", name);
+      console.log("Description:", description);
+
+      // Optionally submit the form after logging:
+
+      out = confirm('are you sure you want to submit the data?')
+
+      if(out==true){
+        console.log('we will submit the form')
+        this.submit();
+      }
+      else{
+        console.log('we will not submit the form')
+      }
+      
+    });
+  });
+
+</script>
+
 {% endblock %}

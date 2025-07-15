@@ -4,9 +4,14 @@ from .views.cb_views import(
     PlListView, PlAddView, PlDetailView, PlUpdateView, PlDeleteView,
     FwAddView, FwListView, FwDetailView, FwUpdateView, FwDeleteView,
 
-    CdAddView, CdListView, CdDetailView, CdUpdateView, CdDeleteView,
+    CdAddView, CdListView, CdDetailView, CdUpdateView, CdDeleteView,CdMyLearningView,
     TeAddView, TeListView, TeDetailView, TeUpdateView, TeDeleteView, TeStartView,
+    TeCheckView,
     SeListView, SeDetailView, SeUpdateView,
+
+    FeeInformationView,
+
+    UserManagementView, UmUpdateView, UmAddTeacherView
 )
 
 # from .views.generic_views_custom import (
@@ -38,16 +43,25 @@ urlpatterns = [
     path('course-data/<int:pk>/update/', CdUpdateView.as_view(), name='course-data-update'),
     path('course-data/<int:pk>/delete/', CdDeleteView.as_view(), name='course-data-delete'),
 
+    path('course-data/my-learning/', CdMyLearningView.as_view(), name='course-data-my-learning'),
+
     path('training-enquiry/list/', TeListView.as_view(), name='training-enquiry-list'),
     path('training-enquiry/add/', TeAddView.as_view(), name='training-enquiry-add'),   
     path('training-enquiry/<int:pk>/detail/', TeDetailView.as_view(), name='training-enquiry-detail'),
     path('training-enquiry/<int:pk>/update/', TeUpdateView.as_view(), name='training-enquiry-update'),
     path('training-enquiry/<int:pk>/delete/', TeDeleteView.as_view(), name='training-enquiry-delete'),
     
+    path('training-enquiry/<str:email>/check/', TeCheckView.as_view(), name='training-enquiry-check'),
     path('training-enquiry/<int:pk>/start/', TeStartView.as_view(), name='training-enquiry-start'),
 
     path('student-enrollment/list/', SeListView.as_view(), name='course-enrollment-list'),
     path('student-enrollment/<int:pk>/detail/', SeDetailView.as_view(), name='course-enrollment-detail'),
     path('student-enrollment/<int:pk>/update/', SeUpdateView.as_view(), name='course-enrollment-update'),
+
+    path('fee-information/<int:enrollment_id>/', FeeInformationView.as_view(),name='fee-information'),
+
+    path('user-management/', UserManagementView.as_view(),name='user-management'),
+    path('user-management/add', UmAddTeacherView.as_view(),name='user-management-add'),
+    path('user-management/<int:pk>/update/', UmUpdateView.as_view(), name='user-management-update'),
 
 ]

@@ -1,74 +1,71 @@
 body {
-    background-color: #f0f2f5;
+    background-color: white !important;
     margin: 0;
     padding: 0;
-    }
+}
 
-    h2 {
+h2 {
     text-align: center;
     margin-top: 30px;
     color: #333;
-    }
+}
 
-    .max {
+.max {
     max-width: 600px;
-    margin: 50px auto;
+    margin: 60px auto;
     margin-left: 500px;
-    background-color: #ffffff;
+    background-color: white;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+}
 
-    label {
+label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
     color: #555;
-    }
+}
 
-    input[type="text"],
-    textarea {
-    width: 90%;
+.btn {
+    text-align: center;
+}
+
+button:hover {
+    background-color: #85c5ed;
+}
+
+.backBtn {
+    text-align: center;
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+.button-group {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    }
+h4{
+    text-align: center;
+}
+
+input,select,textarea{
+    width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
     resize: vertical;
-    }
-
-    .btn {
-    text-align: center;
-    }
-
-    button {
-    background-color: #85c5ed;
-    color: white;
-    padding: 10px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    }
-
-    button:hover {
-    background-color: #85c5ed;
-    }
-
-    .backBtn {
-    text-align: center;
-    margin-top: 15px;
-    }
-
-    h4{
-        text-align: center;
-    }
+}
 
 
 .messages{
     list-style: none;
     padding: 0;
+    text-align: center;
 }
 .messages li {
     padding: 10px;
@@ -81,4 +78,18 @@ body {
 .error {
     background-color: #f8d7da;
     color: #721c24 !important;
+}
+
+a{
+    text-decoration: none;
+}
+
+.btn button {
+    background-color: #85c5ed;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

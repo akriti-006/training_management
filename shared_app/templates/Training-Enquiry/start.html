@@ -1,89 +1,186 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     TE-start
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/te.css' %}">
+{% endblock %}
+
 {% block content %}
 
 
-<style>
+
+<div class="max">
     
+    <form id="start_course" action="{% url 'shared-app:training-enquiry-start' obj.pk %}" method="post">
+        {% csrf_token %}
+        <h1>Are you sure to start this course?</h1>
 
-    h1 {
-        text-align: center;
-        color: #85c5ed;
-    }
+        <table>
+            <h3>Info:</h3>
+            <tr>
+                <td><strong>Username (Email):</strong></td>
+                <td>{{ obj.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Full Name:</strong></td>
+                <td>{{ obj.first_name }} {{ obj.last_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{ obj.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Course Name:</strong></td>
+                <td>{{ obj.course.name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Course Fee:</strong></td>
+                <td>₹{{ obj.course.total_fee }}</td>
+            </tr>
+        </table>
+        <br><br>
 
-    .button-group {
-        margin-top: 20px;
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-    }
+        <div>
+            <label for="course_start_date">Course Start Date</label>
+            <input type="date" name="course_start_date" id="course_start_date">
+        </div>
+      
+        <div>
+            <label for="fee_amount">Fee Amount</label>
+            <input type="text" name="fee_amount" id="fee_amount">
+        </div>
 
-    .messages {
-        list-style: none;
-        padding: 0;
-        margin: 20px auto;
-        text-align: center;
-        width: fit-content;
-        color: rgb(255, 0, 0);
-    }
-    
-    .max {
-        max-width: 600px;
-        margin: 50px auto;
-        margin-left: 500px;
-        margin-top: 200px;
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+        <div>
+            <label for="course_duration">Course Duration</label>
+            <input type="text" name="course_duration" id="course_duration" value="{{obj.course.duration_in_weeks}}">
+        </div>
+
+        <div>
+            <label for="teacher">Teachers:</label>
+            <select name="teacher" id="teacher" multiple>
+                <option value="">-------</option> 
+                {% for teacher in teachers %}
+                <option value="{{teacher.id}}" >{{teacher.get_full_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Password Field with Toggle Eye -->
+        <div>
+            <label for="password">Password</label>
+            <div class="password-container">
+                <input type="password" name="password" id="password" >
+                <span class="toggle-password" onclick="togglePassword()">👁</span>
+            </div>
+        </div>
+
+        <div>
+            <span id="end_date_span">Course end date will be shown here.</span>
+        </div>
+
      
-
-    a {
-        background-color: white;
-        color: #000;
-        border-radius: 4px;
-    }
-
-    </style>
-
-    <div class="max">
-        <ul class="messages">
-            {% for message in messages %}
-            <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-
-        <form action="{% url 'shared-app:training-enquiry-start' obj.pk %}" method="post">
-            {% csrf_token %}
-            <h1>Are you sure to start this course?</h1>
-
-            <div>
-                <label for="course_start_date">Course Start Date</label>
-                <input type="date" name="course_start_date" id="course_start_date">
-            </div>
-
-            <div>
-                <label for="fee_amount">Fee Amount</label>
-                <input type="number" name="fee_amount" id="fee_amount">
-            </div>
-
-            <div>
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password">
-                <i class="fas fa-eye" id="password"></i>
-            
-            </div>
-
-            <div class="button-group">
-                <button type="submit">Yes</button>
-                <a href="{% url 'shared-app:training-enquiry-list' %}">No</a>
-            </div>
-        </form>
+        <br>
+        
+        <div class="button-group">
+            <button id="submit-button" type="submit">Yes</button>
+            <a href="{% url 'shared-app:training-enquiry-list' %}">No</a>
+        </div>
+    </form>
 </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+    $(document).ready(function() {
+        const number_of_weeks = {{obj.course.duration_in_weeks}};
+
+        // Set today's date as min for date input
+        var today = new Date().toISOString().split('T')[0];
+        $('#course_start_date').attr('min', today);
+
+        $('#course_start_date').on('change', function () {
+            let startDate = new Date($(this).val());
+
+            if (!isNaN(startDate)) {
+                // Add number_of_weeks * 7 days
+                let endDate = new Date(startDate);
+                endDate.setDate(endDate.getDate() + number_of_weeks * 7);
+
+                // Format as dd-mm-yyyy
+                let day = String(endDate.getDate()).padStart(2, '0');
+                let month = String(endDate.getMonth() + 1).padStart(2, '0');
+                let year = endDate.getFullYear();
+
+                let formattedEndDate = `${day}-${month}-${year}`;
+
+                $('#end_date_span').text("Course end date is : "+formattedEndDate);
+            }
+        });
+
+        // Password toggle functionality
+        $('.toggle-password').on('click', function() {
+            const $passwordField = $('#password');
+            if ($passwordField.attr('type') === 'password') {
+                $passwordField.attr('type', 'text');
+                $(this).text('❌');
+            } else {
+                $passwordField.attr('type', 'password');
+                $(this).text('👁');
+            }
+        });
+
+        $('#start_course').on('submit', function(e) {
+            $('#submit-button').prop('disabled', true);
+            let isValid = true;
+            let errorMessage = '';
+
+            const selectedDate = new Date($('#course_start_date').val());
+            const todayDate = new Date();
+            todayDate.setHours(0,0,0,0);
+
+            const feeAmount = $('#fee_amount').val().trim();
+            const courseFee = {{ obj.course.total_fee }}; // inject course fee from backend
+            const password = $('#password').val();
+
+            console.log("feeAmount : ", feeAmount)
+            console.log("courseFee : ", courseFee)
+            console.log("password : ", password)
+
+            // Date validation
+            if ($('#course_start_date').val() === '' || selectedDate < todayDate) {
+                isValid = false;
+                errorMessage += '❗ Please select a valid start date (today or future).\n';
+            }
+
+            // Fee amount validation
+            if (parseInt(feeAmount) > courseFee) {
+                isValid = false;
+                errorMessage += '❗ Fee Amount must be a number and ≤ ₹${courseFee}.\n';
+            }
+
+            // Password validation
+            if (password.length < 6 ) {
+                isValid = false;
+                errorMessage += '❗ Password must be at least 6 characters with no spaces.\n';
+            }
+
+            if (!isValid) {
+                alert(errorMessage);
+                e.preventDefault(); // prevent form submission
+                $('#submit-button').prop('disabled', false);
+            }
+            
+            // return false
+        });
+    });
+    
+</script>
 
 {% endblock %}

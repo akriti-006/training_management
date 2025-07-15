@@ -1,0 +1,94 @@
+body {
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 30px;
+    color: #333;
+}
+
+tr td {
+    text-align: center;
+    align-items: center;
+}
+
+tr:nth-child(even) {
+    background-color: #D6EEEE;
+    border-bottom: 1px solid #ddd;
+}
+
+.max {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin-left: 20%;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input,
+textarea,select{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.btn {
+    text-align: center;
+}
+
+button {
+    background-color: #85c5ed;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #85c5ed;
+}
+
+.backBtn {
+    text-align: center;
+    margin-top: 25px;
+    text-decoration: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+.btn button {
+    background-color: #85c5ed;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+thead th{
+    text-align: center;
+}
+
+tr {
+    text-align: center;
+}

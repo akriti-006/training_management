@@ -3,6 +3,7 @@
         <li>
             <a href="{% url 'accounts:home'%}" class="{% if request.resolver_match.view_name == 'accounts:home' %}active{% endif %}">Home</a>
         </li>
+        {% if not is_student %}
         <li>
             <a href="{% url 'shared-app:programming-language-list' %}" class="
             {% if request.resolver_match.view_name == 'shared-app:programming-language-list' %}active{% endif %}
@@ -21,6 +22,7 @@
             {% if request.resolver_match.view_name == 'shared-app:framework-delete' %}active{% endif %}
             ">Framework</a>
         </li>
+        {% endif %}
         <li>
             <a href="{% url 'shared-app:course-data-list' %}" class="
             {% if request.resolver_match.view_name == 'shared-app:course-data-list' %}active{% endif %}
@@ -30,6 +32,7 @@
             {% if request.resolver_match.view_name == 'shared-app:course-data-delete' %}active{% endif %}
             ">Course Data</a>
         </li>
+        {% if not is_student %}
         <li>
             <a href="{% url 'shared-app:training-enquiry-list' %}" class="
             {% if request.resolver_match.view_name == 'shared-app:training-enquiry-list' %}active{% endif %}
@@ -48,9 +51,27 @@
             {% if request.resolver_match.view_name == 'shared-app:course-enrollment-update' %}active{% endif %}
             ">Student Enrollment</a>
         </li>
+
+        <li>
+            <a href="{% url 'shared-app:user-management' %}" class="
+            {% if request.resolver_match.view_name == 'shared-app:user-management' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:user-management-add' %}active{% endif %}
+            {% if request.resolver_match.view_name == 'shared-app:user-management-update' %}active{% endif %}
+            ">User Management</a>
+        </li>
+
+        {% endif %}
+        
+        {% if is_student %}
+        <li>
+            <a href="{% url 'shared-app:course-data-my-learning' %}" class="
+            {% if request.resolver_match.view_name == 'shared-app:course-data-my-learning' %}active{% endif %}">My Learning</a>
+        </li>
+        {% endif %}
     </ul>
     
     <div class="logout">
-        <a href="{% url 'accounts:logout' %}">Logout</a>
+        <a href="{% url 'accounts:logout' %}" id="logoutBtn" class="
+            {% if request.resolver_match.view_name == 'accounts:logout' %}active{% endif %}" >Logout</a>
     </div>
 </div>

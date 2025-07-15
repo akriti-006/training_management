@@ -9,25 +9,27 @@ h4 {
 
 body{
     margin: 0;
-    background:white;
+    background-color:white;
 }
 
-.container{
+.app-container{
     display: flex;
-    
+    margin-left: 0;
 }
 
 .sidebar{
     position: fixed;
     display: flex;
-    top: 0%;
+    /* top: 0%; */
     width: 20%;
+    /* left: 0%; */
     flex-direction: column;
     padding: 20px;
     height: 100vh;
     background-color: rgb(200, 208, 214);
     justify-content: space-between;
     overflow: auto;
+    margin: 0;
 }
 
 .sidebar ul{
@@ -44,21 +46,19 @@ body{
 .sidebar ul li a{
     text-decoration: none;
     display: block;
-    width: 100% !important;
+    width: 100% ;
     padding: 10px;
     background:white;
-    color: black !important;
+    color: black ;
     border-radius: 10px;
     text-align: center;
 }
 
 .main{
-    padding: 20px;
     margin-left: 20%;
     width: 80%;
-
+    padding: 20px;
 }
-
 
 h2{
     text-align: center;
@@ -69,15 +69,13 @@ h2{
 }
 main h4 {
     text-align: center;
-    /* margin: auto; */
+    margin: auto;
 }    
 
-
-    h1{
+h1{
     text-align: center;
     color: #85c5ed;
 }
-
 
 .logout a{
     text-decoration: none;
@@ -89,7 +87,6 @@ main h4 {
     border-radius: 10px;
     text-align: center;
 }
-
 
 .messages{
     list-style: none;
@@ -112,7 +109,6 @@ main h4 {
 /* ===================================================  */
 
 
-
 h1{
 text-align: center;
 color: #85c5ed;
@@ -122,7 +118,10 @@ color: #85c5ed;
     text-align: center;
     display: flex;
     align-content: center;
-    table-layout: auto;
+    margin-right: 16%;
+}
+tr td {
+    align-items: center;
 }
 
 tr:nth-child(even) {
@@ -135,17 +134,33 @@ table{
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     margin: auto;
-    width: 80%;
+    justify-content: center;
 }
 
 thead th{
     background-color: #85c5ed;
     color: white;
-    padding: 12px;
-    height: 40px !important;
-   
+    padding: 7px;
+    height: 20px !important;
+    text-align: center;
+    align-items: center;
 
 }
+
+.custom-table {
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.custom-table th,
+.custom-table td {
+    border: 1px solid #000; 
+    text-align: center;
+}
+
 
 #add a{
     margin-top: 20px;
@@ -165,4 +180,12 @@ thead th{
 
 #back{
     text-align: center;
+}
+
+.error_class{
+    border-color: red !important;
+}
+
+a{
+    text-decoration: none;
 }

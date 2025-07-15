@@ -1,34 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     TE-List
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/te.css' %}">
+{% endblock %}
+
 {% block content %}
-
-<style>
-thead th{
-    height: 40px;
-}
-    
-.messages{
-    list-style: none;
-    padding: 0;
-    text-align: center;
-}
-.messages li {
-    padding: 10px;
-    margin-bottom: 5px;
-}
-.success {
-    color: #155724 !important;
-}
-.error {
-    color: #721c24 !important;
-}
-
-</style>
-
 
 <div class="main">
     <h4>Welcome, {{ request.user.first_name }} {{ request.user.last_name }}!, Year is: {{ current_year }}</h4>
@@ -42,29 +23,45 @@ thead th{
     </ul>
 
     <form method="get">
-        <label>Gender:</label>
-        <select name="gender">
-            <option value="">-- Select Gender --</option>
-            <option value="Male" {% if selected_gender|lower == 'male' %}selected{% endif %}>Male</option>
-            <option value="Female" {% if selected_gender|lower == 'female' %}selected{% endif %}>Female</option>
-        </select>
+        <div class="filter">
 
-        <label>Status:</label>
-        <select name="status">
-            <option value="">-- Select Status --</option>
-            <option value="Enquiry" {% if selected_status|lower == 'enquiry' %}selected{% endif %}>Enquiry</option>
-            <option value="In Progress" {% if selected_status|lower == 'in progress' %}selected{% endif %}>In Progress</option>
-            <option value="Started" {% if selected_status|lower == 'started' %}selected{% endif %}>Started</option>
-            <option value="Completed" {% if selected_status|lower == 'completed' %}selected{% endif %}>Completed</option>
-            <option value="Dropped" {% if selected_status|lower == 'dropped' %}selected{% endif %}>Dropped</option>
-        </select>
+            <div class="left">
+                <label>Gender:</label>
+                <select name="gender">
+                    <option value="">-- Select Gender --</option>
+                    <option value="Male" {% if selected_gender|lower == 'male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if selected_gender|lower == 'female' %}selected{% endif %}>Female</option>
+                </select>
+            </div>
 
-        <button type="submit">Apply</button>
-        <a href="{% url 'shared-app:training-enquiry-list' %}">Clear</a>
+
+            <div class="right">
+                <label>Status:</label>
+                <select name="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="Enquiry" {% if selected_status|lower == 'enquiry' %}selected{% endif %}>Enquiry
+                    </option>
+                    <option value="In Progress" {% if selected_status|lower == 'in progress' %}selected{% endif %}>In
+                        Progress</option>
+                    <option value="Started" {% if selected_status|lower == 'started' %}selected{% endif %}>Started
+                    </option>
+                    <option value="Completed" {% if selected_status|lower == 'completed' %}selected{% endif %}>Completed
+                    </option>
+                    <option value="Dropped" {% if selected_status|lower == 'dropped' %}selected{% endif %}>Dropped
+                    </option>
+                </select>
+            </div>
+            <div class="apply">
+                <button type="submit">Apply</button>
+                <a href="{% url 'shared-app:training-enquiry-list' %}">Clear</a>
+            </div>
+            
+        </div>
+
     </form>
     
     <div class="box">
-        <table border="1">
+        <table class="custom-table" border="1">
             <thead>
                 <tr>
                     <th rowspan="2">S no.</th>
@@ -103,9 +100,18 @@ thead th{
 
                     </td>
                     <td>
-                        <a href="{% url 'shared-app:training-enquiry-detail' obj.id %}">Detail</a> || 
-                        <a href="{% url 'shared-app:training-enquiry-update' obj.id %}">Update</a> ||
-                        <a href="{% url 'shared-app:training-enquiry-delete' obj.id %}">Delete</a>
+                        <a href="{% url 'shared-app:training-enquiry-update' obj.id %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                        <a href="{% url 'shared-app:training-enquiry-detail' obj.id %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-eye"></i>
+                        </a>
+
+                        <form action="{% url 'shared-app:training-enquiry-delete' obj.id %}" method="post" class="delete-form delete-form-{{ obj.id }}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class=" btn-danger btn-sm">🗑️</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}
@@ -121,6 +127,39 @@ thead th{
         <div id="back">
             <a href="{% url 'accounts:home' %}">Back</a>
         </div>
-
+        
     </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+    // Target all forms with class starting with "delete-form"
+    $('form.delete-form').on('submit', function (e) {
+      e.preventDefault(); // stop form from submitting
+
+      const currentForm = this;
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "This will delete the item permanently!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          currentForm.submit(); // submit after confirmation
+          console.log("want to delete")
+        }
+        else{
+            console.log("don't want to delete.")
+        }
+      });
+    });
+  });
+</script>
+
 {% endblock %}

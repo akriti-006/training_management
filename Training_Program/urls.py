@@ -23,7 +23,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    path('oauth/', include('social_django.urls', namespace='social')),
+    
     # path('app1/', include('app1.urls')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('', include('shared_app.urls', namespace='shared-app')),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:  # Only in development
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

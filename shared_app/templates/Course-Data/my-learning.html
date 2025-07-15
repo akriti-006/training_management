@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    CD-List
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/cd.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+
+        <div class="main">
+            
+         <h4>Welcome, {{ request.user.first_name }} {{ request.user.last_name }}, Year is: {{ current_year }}</h4>
+
+
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+
+            <h2 style="color: #85c5ed;">Your Course Details</h2>
+
+            <div class="box">
+                <table class="custom-table" border="1">
+                    <thead>
+                        <th>S.no.</th>
+                        <th>Course Name</th>
+                        <th>Price</th>
+                        <th>Duration (in weeks)</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Amount Paid</th>
+                        <th>Pending Fee</th>
+                        
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in data %}
+                       
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                        
+                            <td>{{item.enrollment.course.name}}</td>
+                        
+                            <td>{{item.enrollment.course.total_fee}}</td>
+                        
+                            <td>{{item.enrollment.course.duration_in_weeks}}</td>
+                        
+                            <td>{{item.enrollment.start_date}}</td>
+                        
+                            <td>{{item.enrollment.end_date}}</td>
+                        
+                            <td>{{item.amount_paid}}</td>
+                        
+                            <td>{{item.pending_fee}}</td>
+                        
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                </div>
+
+
+                <div id="back">
+                    <a href="{% url 'accounts:home' %}">Back</a>
+                </div>
+
+            </div>
+{% endblock %}

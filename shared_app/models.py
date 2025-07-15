@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
 from Training_Program.utility.common_model import CommonModel
+
 
 GENDER_CHOICES = (
     ('Male', 'Male'),
@@ -15,6 +15,12 @@ STATUS_CHOICE = (
     ('Started', 'Started'),
     ('Completed', 'Completed'),
     ('Dropped', 'Dropped'),
+)
+
+COURSE_STATUS_CHOICE = (
+    ('In Progress', 'In Progress'),
+    ('Completed', 'Completed'),
+    ('On Hold', 'On Hold'),
 )
 
 class ProgrammingLanguage(CommonModel):
@@ -80,7 +86,7 @@ class CourseEnrollment(CommonModel):
     course = models.ForeignKey(CourseData, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
-    is_active = models.BooleanField(default=True)
+    course_status = models.CharField(max_length=20, choices=COURSE_STATUS_CHOICE)
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_by")
 
@@ -92,6 +98,13 @@ class CourseEnrollment(CommonModel):
         return f"{self.student.username} enrolled in {self.course.name}"
 
 
+class CourseEnrollmentExtensionLog(CommonModel):
+    enrollment = models.ForeignKey(CourseEnrollment, on_delete=models.CASCADE)
+    new_end_date = models.DateField()
+    remark = models.TextField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class FeeInformation(CommonModel):
     enrollment = models.ForeignKey(CourseEnrollment, on_delete=models.CASCADE)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
@@ -100,4 +113,8 @@ class FeeInformation(CommonModel):
 
     def __str__(self):
         return f"{self.enrollment.student} paid {self.amount_paid}"
-    
+
+
+class TeacherCourseEnrollmentMapping(CommonModel):
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name="teacher")
+    course_enrollment = models.ForeignKey(CourseEnrollment, on_delete=models.CASCADE)

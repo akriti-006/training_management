@@ -1,81 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     TE-details
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/te.css' %}">
+{% endblock %}
+
 {% block content %}
-<style>
-      body {
-        background-color: #f0f2f5;
-        margin: 0;
-        padding: 0;
-      }
-
-      h2 {
-        text-align: center;
-        margin-top: 30px;
-        color: #333;
-      }
-
-      .max {
-        max-width: 500px;
-        margin: 40px auto;
-        margin-left: 500px;
-        margin-top: 50px;
-        padding: 20px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-      }
-
-      input[type="text"],
-      textarea {
-        width: 90%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 14px;
-        resize: vertical;
-      }
-
-      .btn {
-        text-align: center;
-      }
-
-      button {
-        background-color: #85c5ed;
-        color: white;
-        padding: 10px 25px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      button:hover {
-        background-color: #85c5ed;
-      }
-
-      .backBtn {
-  text-align: center;
-  margin-top: 15px;
-}
-
-    </style>
-
-
   
 <div class="max">
-      <h2>Detail</h2>
+      <h2>Detail</h2><br>
 
       <ul class="messages">
         {% for message in messages %}
@@ -86,42 +23,39 @@
       <form action="{% url 'shared-app:training-enquiry-detail' obj.id %}" method="POST">
         {% csrf_token %}
 
-        <label for="first_name">First Name:</label><br>
-        <input type="text" id="first_name" name="first_name" value="{{obj.first_name}}" /><br><br>
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" value="{{obj.first_name}}" />
 
-        <label for="last_name">Last Name:</label><br>
-        <input type="text" id="last_name" name="last_name" value="{{obj.last_name}}" /><br><br>
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" value="{{obj.last_name}}" />
 
-        <label for="address">Address:</label><br>
-        <textarea name="address" id="address" rows="4" cols="50">{{obj.address}}</textarea><br><br>
+        <label for="address">Address:</label>
+        <textarea name="address" id="address" rows="4" cols="50">{{obj.address}}</textarea>
 
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" value="{{obj.email}}" /><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{obj.email}}" />
 
-        <label for="phone">Phone:</label><br>
-        <input type="number" id="phone" name="phone" value="{{obj.phone}}"/><br><br>
+        <label for="phone">Phone:</label>
+        <input type="number" id="phone" name="phone" value="{{obj.phone}}"/>
 
-        <label for="gender">Gender:</label><br>
-        <input type="text" id="gender" name="gender" value="{{obj.gender}}"> <br><br>
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" name="gender" value="{{obj.gender}}">
 
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4" cols="50">{{obj.description}}</textarea><br><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50">{{obj.description}}</textarea>
 
+        <label for="higher_qualification">Higher Education:</label>
+        <input type="text" id="higher_qualification" name="higher_qualification" value="{{obj.higher_qualification}}">
 
-        <label for="higher_qualification">Higher Education:</label><br>
-        <input type="text" id="higher_qualification" name="higher_qualification" value="{{obj.higher_qualification}}"><br><br>
+        <label for="course">Course:</label>
+        <input type="text" id="course" name="course" value="{{obj.course}}">
 
-
-        <label for="course">Course:</label><br>
-        <input type="text" id="course" name="course" value="{{obj.course}}"><br><br>
-
-
-        <label for="status">Status:</label><br>
-        <input type="text" id="status" name="status" value="{{obj.status}}"> <br><br>
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" value="{{obj.status}}"><br>
 
 
         <div class="backBtn">
-          <a href="{% url 'shared-app:training-enquiry-list' %}">⬅ Back</a>
+          <a href="{% url 'shared-app:training-enquiry-list' %}">Back</a>
         </div>
 
       </form>

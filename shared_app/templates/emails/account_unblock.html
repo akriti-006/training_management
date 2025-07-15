@@ -77,7 +77,7 @@
         <p>Hi <strong>{{first_name}} {{last_name}}</strong>,</p>
         <p>Good news! Your account has been successfully unblocked, and you can now access all your courses and features again.</p>
 
-        <a href="{{login_link}}" class="button">Login Now</a>
+        <a href="{% url 'accounts:login' %}" class="button">Login Now</a>
 
         <p>We’re glad to have you back on board. If you have any questions or need assistance, please don’t hesitate to reach out.</p>
 

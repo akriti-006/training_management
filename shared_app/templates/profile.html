@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 20px;
+    }
+
+    .profile-header img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #007bff;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section h3 {
+      color: #007bff;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #007bff;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 15px 30px;
+    }
+
+    .info-grid label {
+      font-weight: bold;
+      color: #333;
+      align-self: center;
+    }
+
+    .info-grid input,
+    .info-grid select,
+    .info-grid textarea {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .submit-btn {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .submit-btn button {
+      background-color: #007bff;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .submit-btn button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Course table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #f0f8ff;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .profile-header img {
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <form class="container" method="POST" enctype="multipart/form-data" action="/submit-profile/">
+    <div class="profile-header">
+      <img id="profilePreview" src="https://via.placeholder.com/120" alt="Profile Picture">
+      <div>
+        <input type="file" name="profile_picture" accept="image/*" onchange="previewImage(event)" />
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Basic Information</h3>
+      <div class="info-grid">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" value="Akriti Sharma" required>
+
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" value="23" min="0" required>
+
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender" required>
+          <option value="female" selected>Female</option>
+          <option value="male">Male</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" value="akriti@example.com" required>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" name="phone" id="phone" value="+91-9876543210" required>
+
+        <label for="address">Address:</label>
+        <textarea name="address" id="address" rows="2">123 Main Street, New Delhi, India</textarea>
+
+        <label for="qualification">Higher Qualification:</label>
+        <input type="text" name="qualification" id="qualification" value="Master of Computer Applications">
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Course Information</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Course Name</th>
+            <th>Duration</th>
+            <th>Price (₹)</th>
+            <th>Assigned Teacher</th>
+            <th>Amount Paid (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Full Stack Web Development</td>
+            <td>6 Months</td>
+            <td>30,000</td>
+            <td>Mr. Rahul Verma</td>
+            <td>20,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="submit-btn">
+      <button type="submit">Update</button>
+    </div>
+  </form>
+
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        const output = document.getElementById('profilePreview');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+
+</body>
+</html>

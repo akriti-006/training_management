@@ -26,6 +26,10 @@
     </style>
 
     <h4>Welcome, {{ user.username }}!</h4>
+    <!-- <h5>is_admin : {{is_admin}}</h5>
+    <h5>is_hr : {{is_hr}}</h5>
+    <h5>is_student : {{is_student}}</h5>
+    <h5>is_teacher : {{is_teacher}}</h5> -->
 
     {% if messages %}
         <ul class="messages">
@@ -37,5 +41,24 @@
 
 
     <h2>This is Home page</h2>
+
+    <br><br>
+
+    <div>
+        <h5>Total Students: {{se_obj}}</h5>
+    </div>
+
+    <div>
+        <h5>Programming Languages: {{pl_obj}}</h5>
+    </div>
+
+    <div>
+        <h5>Frameworks: {{fw_obj}}</h5>
+    </div>
+
+    <div>
+        <h5>Total Enquiries: {{te_obj}}</h5>
+    </div>
+
 </div>
 {% endblock %}

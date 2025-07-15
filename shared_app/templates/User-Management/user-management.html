@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% load custom_tag %}
+{% load static %}
+
+{% block title %}
+    user-management
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/se.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="main">
+        
+        <h4>Welcome, {{ request.user.first_name }} {{ request.user.last_name }}!, Year is: {{ current_year }}</h4>
+
+        <h1>User Management</h1>
+
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        
+        <div class="box">
+
+            <table class="custom-table" border="1">
+                <thead>
+                    <th>S no.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Group</th>
+                    <th>is_active</th>
+                    <th>Action</th>
+                    
+                </thead>
+
+                <tbody>
+                    {% for obj in all_user %}
+                    <br>
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ obj.get_full_name }}</td>
+                        <td>{{ obj.email }} </td>
+                        <td>
+                            {% for student in obj.student.all %}
+                                {{student.course.name}}, 
+                            {% empty %}
+                                ----
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for group in obj.groups.all %}
+                                {{ group.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                ----
+                            {% endfor %}
+                        </td>
+                        <td>{{obj.is_active}}</td>
+                        <td>
+                        <a href="{% url 'shared-app:user-management-update' obj.id %}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-edit"></i>
+                        </a>
+                        
+                    </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+            
+
+            </div>
+
+            <div id="add">
+                <a href="{% url 'shared-app:user-management-add' %}">Add Teacher</a>
+            </div>
+
+            <div id="back">
+                <a href="{% url 'accounts:home' %}">Back</a>
+            </div>
+
+        </div>
+{% endblock %}

@@ -1,35 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     Fw-detail
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/fw.css' %}">
+{% endblock %}
+
 {% block content %}
 <style>
-    
-    body {
-        background-color: #f4f6f9;
-        margin: 0;
-        padding: 0;
-    }
-
-    .max {
-        max-width: 600px;
-        margin: 50px auto;
-        margin-left: 500px;
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 8px;
-        color: #333;
-    }
-
     input[type="text"],
     textarea,
     select {
@@ -40,34 +21,11 @@
         border-radius: 5px;
         font-size: 14px;
     }
-
-    .btn {
-        text-align: center;
-    }
-
-    button {
-        background-color: #85c5ed;
-        color: white;
-        padding: 10px 25px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #85c5ed;
-    }
-
-    .backBtn {
-        text-align: center;
-        margin-top: 15px;
-    }
-
 </style>
 
-
 <div class="max">
+
+    <h2>Detail</h2>
     <form action="{% url 'shared-app:framework-detail' obj.id %}" method="POST">
         {% csrf_token %}
 
@@ -86,7 +44,7 @@
         </select>
 
         <div class="backBtn">
-          <a href="{% url 'shared-app:framework-list'%}">⬅ Back</a>
+          <a href="{% url 'shared-app:framework-list'%}">Back</a>
         </div>
         
     </form>

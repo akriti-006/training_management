@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,11 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_#%%qwd!qvlt!(^r&=3j(2-9)%=ys+t+$51wqg$$^fo@f#462q'
+load_dotenv()
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG')
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
 
 ALLOWED_HOSTS = []
 
@@ -39,19 +43,49 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # 'app1',
     'accounts',
     'shared_app',
+    'social_django',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',  # Required for Google OAuth
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1007938226918-j3jgg66cksbbilr6q61mp2qt9gu9v2ue.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+'https://www.googleapis.com/auth/userinfo.email',
+'https://www.googleapis.com/auth/userinfo.profile',
+]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = [
+('name', 'full_name'),
+('email', 'email'),
+('picture', 'profile_picture'),
+]
+
+
+
+LOGIN_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:logout'
+LOGIN_REDIRECT_URL = 'accounts:home'  # after successful login
+LOGOUT_REDIRECT_URL = 'accounts:login'
+
 MIDDLEWARE = [
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+    'Training_Program.utility.middleware.CustomMiddleware',
 ]
 
 ROOT_URLCONF = 'Training_Program.urls'
@@ -67,6 +101,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'Training_Program.utility.context_processor.my_context_processor',
+                'Training_Program.utility.context_processor.current_user_group_check',
+                'social_django.context_processors.backends',  # Required
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -120,7 +157,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-import os
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -140,3 +176,16 @@ EMAIL_HOST_USER = 'akritisharma006@gmail.com'
 EMAIL_HOST_PASSWORD = 'kfqo vofa gilu acpv'
 
 PLATFORM_LOGIN_LINK = 'http://127.0.0.1:2222/accounts/login/'
+
+
+SESSION_COOKIE_AGE = 1800  # session expires in 30 minutes
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # session clears on browser close
+SESSION_SAVE_EVERY_REQUEST = True  # updates session expiry on every request
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+
+# MEDIA
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

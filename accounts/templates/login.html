@@ -1,108 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      background: white;
+      flex-direction: column;
+      margin: 0;
+    }
 
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: sans-serif;
-            line-height: 1.5;
-            min-height: 100vh;
-            background: white;
-            flex-direction: column;
-            margin: 0;
-        }
+    .messages {
+      list-style: none;
+      padding: 0;
+      margin: 20px auto;
+      text-align: center;
+      width: fit-content;
+      color: rgb(255, 0, 17);
+    }
 
-        .main {
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            padding: 10px 20px;
-            transition: transform 0.2s;
-            width: 500px;
-            text-align: center;
-        }
+    .main {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      padding: 10px 20px;
+      transition: transform 0.2s;
+      width: 500px;
+      text-align: center;
+    }
 
-        h1 {
-            color: #4CAF50;
-        }
+    h1 {
+      color: #85c5ed;
+    }
 
-        label {
-            display: block;
-            width: 100%;
-            margin-top: 10px;
-            margin-bottom: 5px;
-            text-align: left;
-            color: #555;
-            font-weight: bold;
-        }
+    label {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      text-align: left;
+      color: #555;
+      font-weight: bold;
+    }
 
-        input {
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+    .input-group {
+      position: relative;
+    }
 
-        button {
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            border: none;
-            color: white;
-            cursor: pointer;
-            background-color: #4CAF50;
-            width: 100%;
-            font-size: 16px;
-        }
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
 
-        .wrap {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      user-select: none;
+      font-size: 18px;
+    }
 
-    </style>
+    button {
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      background-color: #85c5ed;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="main">
+  
+  <div class="main">
+    <h1>Login</h1>
 
-        <h1>Login</h1>
-        <h3>Enter your login credentials</h3>
-
+    <div class="message">
         {% for message in messages %}
         <p>{{message}}</p>
         {% endfor %}
-
-        <form action="{% url 'accounts:login' %}" method="POST">
-            {% csrf_token %}
-
-            <label for="username">Username</label><br>
-            <input type="text" id="username" name="username" placeholder="Enter username" required />
-            <br />
-            <br />
-
-            <label for="password">Password</label><br>
-            <input type="password" id="password" name="password" placeholder="Enter password" required />
-            <br><br>
-
-            <div class="wrap">
-                <button type="submit">Login</button>
-            </div>
-        </form>
     </div>
+
+    <h3>Enter your login credentials</h3>
+
+    <form action="{% url 'accounts:login' %}" method="POST">
+      {% csrf_token %}
+
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Enter username" required>
+      <br>
+
+      <label for="password">Password</label>
+      <div class="input-group">
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+        <span class="toggle-password" onclick="togglePassword()">👁</span>
+      </div>
+
+      <div class="wrap">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+
+
+    <script>
+        function togglePassword() {
+        const passwordField = document.getElementById("password");
+        const toggleIcon = document.querySelector(".toggle-password");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.textContent = "❌";
+        } else {
+            passwordField.type = "password";
+            toggleIcon.textContent = "👁";
+        }
+        }
+    </script>
 </body>
 
 </html>

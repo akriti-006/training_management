@@ -1,0 +1,183 @@
+body {
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 30px;
+    color: #333;
+}
+
+.max {
+    max-width: 500px;
+    margin: 40px auto;
+    margin-left: 500px;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input,select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.btn {
+    text-align: center;
+}
+
+button:hover {
+    background-color: #85c5ed;
+}
+
+.backBtn {
+    text-align: center;
+    margin-top: 15px;
+}
+
+
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filter .left,
+.filter .right {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.filter select {
+    padding: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.filter select:focus {
+    border-color: #007bff;  
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: relative;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    font-size: 18px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.messages{
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    align-items: center;
+}
+.messages li {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.error_class{
+    border-color: red ;
+}
+
+.btn button {
+    background-color: #85c5ed;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-content: center;
+}
+
+.apply button{
+    background-color: #85c5ed;
+    color: white;
+    padding: 7px 15px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-content: center;
+}
+
+.apply{
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+h3{
+    text-align: center;
+}
+
+.button-group button{
+    background-color: #85c5ed;
+    color: white;
+    padding: 7px 15px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-content: center;
+}

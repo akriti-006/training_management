@@ -35,7 +35,7 @@ label {
 
 input[type="text"],
 textarea {
-    width: 90%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
@@ -44,31 +44,16 @@ textarea {
     resize: vertical;
     }
 
-.btn {
-    text-align: center;
-    }
-
-button {
-    background-color: #85c5ed;
-    color: white;
-    padding: 10px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    }
 
 button:hover {
     background-color: #85c5ed;
     }
 
 .backBtn {
-    text-align: center;
+    text-align: center !important;
     margin-top: 15px;
-    text-decoration: none;
-    
+    text-decoration: none ;   
 }
-
 
 #add{
     align-items: center;
@@ -92,9 +77,6 @@ h1{
     color: #85c5ed;
 }
 
-
-
-
 .messages{
     list-style: none;
     padding: 0;
@@ -111,3 +93,24 @@ h1{
     background-color: #f8d7da;
     color: #721c24 !important;
 }
+
+.error_class{
+    border-color: red ;
+}
+a{
+    text-decoration: none;
+}
+
+.btn button {
+    background-color: #85c5ed;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    align-content: center;
+}
+
+

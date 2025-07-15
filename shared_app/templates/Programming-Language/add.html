@@ -11,8 +11,8 @@
 
 {% block content %}
     <div class="max">
-      <h2>Programming Language {{current_year}}</h2>
-      <form action="{% url 'shared-app:programming-language-add' %}" method="POST">
+      <h2>Programming Language</h2>
+      <form id="add_form" action="{% url 'shared-app:programming-language-add' %}" method="POST">
         {% csrf_token %}
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" />
@@ -21,9 +21,69 @@
         <div class="btn">
           <button type="submit">Add</button>
         </div>
-        <div class="backBtn">
-          <a href="{% url 'shared-app:programming-language-list'%}">⬅ Back</a>
+        <div class="backBtn"> 
+          <a href="{% url 'shared-app:programming-language-list'%}">Back</a>
         </div>
       </form>
     </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    $('#add_form').on('submit', function (e) {
+      e.preventDefault(); // Prevent form submission
+
+      // Get the form values
+      const name = $('#name').val().trim();
+      const description = $('#description').val().trim();
+
+      flag = 0
+
+      if(name==0){
+        console.log('name is invalid')
+        $('#name').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#name').removeClass( "error_class" );
+      }
+      
+      if(description==0){
+        console.log('description is invalid')
+        $('#description').addClass( "error_class" );
+        flag=1
+      }
+      else{
+        $('#description').removeClass( "error_class" );
+      }
+
+      if(flag==1)
+      {
+        return;
+      }
+
+      // Log to console
+      console.log("Form Data:");
+      console.log("Name:", name);
+      console.log("Description:", description);
+
+      // Optionally submit the form after logging:
+
+      out = confirm('are you sure you want to submit the data?')
+
+      if(out==true){
+        console.log('we will submit the form')
+        this.submit();
+      }
+      else{
+        console.log('we will not submit the form')
+      }
+      
+    });
+  });
+
+</script>
+
 {% endblock %}

@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import CourseData, ProgrammingLanguage, Framework, TrainingEnquiry, CourseEnrollment, FeeInformation
+from .models import (
+    CourseData, ProgrammingLanguage, Framework,
+    TrainingEnquiry, CourseEnrollment, FeeInformation,
+    CourseEnrollmentExtensionLog, TeacherCourseEnrollmentMapping
+)
 
 
 class ProgrammingLanguageAdmin(admin.ModelAdmin):
@@ -44,14 +48,12 @@ class TrainingEnquiryAdmin(admin.ModelAdmin):
             },
         ),
     ]
-
-
 admin.site.register(TrainingEnquiry,TrainingEnquiryAdmin)
 
 
 class CourseEnrollmentAdmin(admin.ModelAdmin):
     list_display = [
-        'student_name', 'course__name', 'start_date', 'end_date',
+        'id', 'student_name', 'course__name', 'course_status', 'start_date', 'end_date',
     ]
 
     def student_name(self, obj):
@@ -59,9 +61,14 @@ class CourseEnrollmentAdmin(admin.ModelAdmin):
         return name
 
     student_name.short_description = 'Stu Name'
-
-    
 admin.site.register(CourseEnrollment, CourseEnrollmentAdmin)
+
+
+class CourseEnrollmentExtensionLogAdmin(admin.ModelAdmin):
+    list_display = [
+        'id', 'enrollment', 'new_end_date',
+    ]
+admin.site.register(CourseEnrollmentExtensionLog, CourseEnrollmentExtensionLogAdmin)
 
 
 class FeeInformationAdmin(admin.ModelAdmin):
@@ -69,3 +76,10 @@ class FeeInformationAdmin(admin.ModelAdmin):
         'enrollment', 'amount_paid',
     ]
 admin.site.register(FeeInformation, FeeInformationAdmin)
+
+
+class TeacherCourseEnrollmentMappingAdmin(admin.ModelAdmin):
+    list_display = [
+        'id', 'teacher', 'course_enrollment'
+    ]
+admin.site.register(TeacherCourseEnrollmentMapping, TeacherCourseEnrollmentMappingAdmin)

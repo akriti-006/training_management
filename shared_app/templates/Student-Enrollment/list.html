@@ -1,37 +1,18 @@
 {% extends 'base.html' %}
 
 {% load custom_tag %}
+{% load static %}
 
 {% block title %}
     SE-List
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shared-app/css/se.css' %}">
+{% endblock %}
+
+
 {% block content %}
-
-<style>
-    thead th{
-        height: 40px;
-    }
-
-    thead th{
-    height: 40px;
-}
-    
-.messages{
-    list-style: none;
-    padding: 0;
-}
-.messages li {
-    padding: 10px;
-    margin-bottom: 5px;
-}
-.success {
-    color: #155724 !important;
-}
-.error {
-    color: #721c24 !important;
-}
-</style>
 
         <div class="main">
            <h4>Welcome, {{ request.user.first_name }} {{ request.user.last_name }}!,  Year is: {{ current_year}}</h4>
@@ -42,7 +23,7 @@
                 {% endfor %}
             </ul>
             <div class="box">
-               <table border="1">
+               <table class="custom-table" border="1">
                     <thead>
                         <tr>
                             <th rowspan="2">S.no.</th>
@@ -50,6 +31,7 @@
                             <th rowspan="2">Email</th>
                             <th rowspan="2">Course Name</th>
                             <th colspan="3">Fees</th>
+                            <th rowspan="2">Course Status</th>
                             <th rowspan="2">Start Date</th>
                             <th rowspan="2"> End Date</th>
                             <th rowspan="2">Action</th>
@@ -71,14 +53,20 @@
                             <td>{{ obj.course.name }}</td>
                             <td>{{ obj.course.total_fee }}</td>
                             <td>{{ obj.feeinformation_set.all|sum_values:"amount_paid"  }}</td>
-                            <td>{{obj.course.total_fee|pending_amount:obj.feeinformation_set.all}}</td>
+                            <td>{{ obj.course.total_fee|pending_amount:obj.feeinformation_set.all }}</td>
+                            <td>{{ obj.course_status }}</td>
                             <td>{{ obj.start_date }}</td>
-                            <td>{{obj.end_date}}</td>
-                    <td>
-                        <a href="{% url 'shared-app:course-enrollment-detail' obj.id %}">Detail</a> || 
-                        <a href="{% url 'shared-app:course-enrollment-update' obj.id %}">Update</a> 
-                    </td>
-                </tr>
+                            <td>{{ obj.end_date }}</td>
+                            <td>
+                                <a href="{% url 'shared-app:course-enrollment-update' obj.id %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <a href="{% url 'shared-app:course-enrollment-detail' obj.id %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
             </tbody>
             {% endfor %}
             </tbody>

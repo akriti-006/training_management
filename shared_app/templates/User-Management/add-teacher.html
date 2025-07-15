@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Teacher{% endblock %}
+
+{% block css %}
+<style>
+    .form-box {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <h2>Add Teacher</h2>
+
+    <div class="form-box">
+        <form id="teacher_form" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" name="first_name" value="{{ user_obj.first_name }}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" name="last_name" value="{{ user_obj.last_name }}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" value="{{ user_obj.email }}" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" name="password" id="password" class="form-control">
+                    <div class="input-group-append">
+                        <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
+                            <i id="eyeIcon" class="fa fa-eye-slash"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <button id="submitBtn" type="submit" class="btn btn-primary">
+                <span id="btnText"><i class="fa fa-user-plus"></i> Add Teacher</span>
+            </button>
+            <a href="{% url 'shared-app:user-management' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById("password");
+        const icon = document.getElementById("eyeIcon");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        } else {
+            passwordField.type = "password";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        }
+    }
+
+    $(document).ready(function () {
+        $('#teacher_form').on('submit', function (e) {
+            e.preventDefault();
+
+            let flag = 0;
+
+            const fields = ['first_name', 'last_name', 'email', 'password'];
+            fields.forEach(function (field) {
+                const value = $(`[name="${field}"]`).val().trim();
+                if (value === '') {
+                    $(`[name="${field}"]`).addClass("error_class");
+                    flag = 1;
+                } else {
+                    $(`[name="${field}"]`).removeClass("error_class");
+                }
+            });
+
+            if (flag === 1) {
+                return;
+            }
+
+            const confirmSubmit = confirm('Are you sure you want to submit the data?');
+            if (confirmSubmit) {
+                this.submit();
+            }
+            
+        });
+    });
+</script>
+
+{% endblock %}
