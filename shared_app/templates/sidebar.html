@@ -1,7 +1,8 @@
 <div class="sidebar">
     <ul>
         <li>
-            <a href="{% url 'accounts:home'%}" class="{% if request.resolver_match.view_name == 'accounts:home' %}active{% endif %}">Home</a>
+            <a href="{% url 'accounts:home'%}"
+                class="{% if request.resolver_match.view_name == 'accounts:home' %}active{% endif %}">Home</a>
         </li>
         {% if not is_student %}
         <li>
@@ -61,17 +62,20 @@
         </li>
 
         {% endif %}
-        
+
         {% if is_student %}
         <li>
             <a href="{% url 'shared-app:course-data-my-learning' %}" class="
-            {% if request.resolver_match.view_name == 'shared-app:course-data-my-learning' %}active{% endif %}">My Learning</a>
+            {% if request.resolver_match.view_name == 'shared-app:course-data-my-learning' %}active{% endif %}">My
+                Learning</a>
         </li>
         {% endif %}
     </ul>
-    
+
     <div class="logout">
-        <a href="{% url 'accounts:logout' %}" id="logoutBtn" class="
-            {% if request.resolver_match.view_name == 'accounts:logout' %}active{% endif %}" >Logout</a>
+        <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
     </div>
 </div>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
   <style>
     body {
@@ -94,15 +95,16 @@
     }
   </style>
 </head>
+
 <body>
-  
+
   <div class="main">
     <h1>Login</h1>
 
     <div class="message">
-        {% for message in messages %}
-        <p>{{message}}</p>
-        {% endfor %}
+      {% for message in messages %}
+      <p>{{message}}</p>
+      {% endfor %}
     </div>
 
     <h3>Enter your login credentials</h3>
@@ -119,7 +121,11 @@
         <input type="password" id="password" name="password" placeholder="Enter password" required>
         <span class="toggle-password" onclick="togglePassword()">👁</span>
       </div>
-
+      <div>
+        <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">
+          Login with Google
+        </a>
+      </div>
       <div class="wrap">
         <button type="submit">Login</button>
       </div>
@@ -127,20 +133,20 @@
   </div>
 
 
-    <script>
-        function togglePassword() {
-        const passwordField = document.getElementById("password");
-        const toggleIcon = document.querySelector(".toggle-password");
+  <script>
+    function togglePassword() {
+      const passwordField = document.getElementById("password");
+      const toggleIcon = document.querySelector(".toggle-password");
 
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            toggleIcon.textContent = "❌";
-        } else {
-            passwordField.type = "password";
-            toggleIcon.textContent = "👁";
-        }
-        }
-    </script>
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.textContent = "❌";
+      } else {
+        passwordField.type = "password";
+        toggleIcon.textContent = "👁";
+      }
+    }
+  </script>
 </body>
 
 </html>

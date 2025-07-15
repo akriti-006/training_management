@@ -118,3 +118,4 @@ class FeeInformation(CommonModel):
 class TeacherCourseEnrollmentMapping(CommonModel):
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name="teacher")
     course_enrollment = models.ForeignKey(CourseEnrollment, on_delete=models.CASCADE)
+
