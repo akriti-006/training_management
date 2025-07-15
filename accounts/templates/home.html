@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
             justify-content: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            flex-direction: column;
         }
 
         /* Card-style container */
@@ -52,22 +54,26 @@
         }
     </style>
 </head>
+
 <body>
 
-     {% for message in messages %}
-        <p style="color: black;">{{message}}</p>
+    {% for message in messages %}
+    <p style="color: black;">{{message}}</p>
     {% endfor %}
 
     <h2>Welcome, {{request.user.username}}</h2>
-    
+
     <div class="container">
         <h1>Welcome to the Home Page</h1>
-        <a href="{% url 'shared-app:programming-language-list' %}">Programming Language</a>
-        <a href="{% url 'shared-app:framework-list' %}">Framework</a>
-        <a href="{% url 'shared-app:course-data-list' %}">Course Data</a>
-        <a href="{% url 'shared-app:training-enquiry-list' %}">Training Enquiry</a>
-   
+        <a href="#">Programming Language</a>
+        <a href="#">Framework</a>
+        <a href="#">Course Data</a>
+        <a href="#">Training Enquiry</a>
     </div>
-    <a href="{% url 'accounts:logout' %}">Logout</a>
+    <form method="post" action="{% url 'accounts:logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
 </body>
+
 </html>
